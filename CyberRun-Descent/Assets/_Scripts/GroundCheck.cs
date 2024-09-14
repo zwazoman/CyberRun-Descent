@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class GroundCheck : MonoBehaviour
 {
-    public event Action OnGroundHit;
-    public event Action OnGroundLeave;
+    public UnityEvent OnGroundHit;
+    public UnityEvent OnGroundLeave;
 
     Collider _coll;
 
@@ -17,11 +19,11 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        OnGroundHit?.Invoke();
+        if(other.gameObject.layer == 6) OnGroundHit?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        OnGroundLeave?.Invoke();
+        if (other.gameObject.layer == 6) OnGroundLeave?.Invoke();
     }
 }

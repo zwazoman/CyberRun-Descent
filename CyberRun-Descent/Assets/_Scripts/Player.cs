@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -11,9 +12,9 @@ public class Player : MonoBehaviour
     public bool IsDiving { get; private set; }
     public bool IsSuspended { get; private set; }
 
-    public event Action OnJump;
-    public event Action OnSuspend;
-    public event Action OnDive;
+    public UnityEvent OnJump;
+    public UnityEvent OnSuspend;
+    public UnityEvent OnDive;
 
     [Header("Parameters")]
     [SerializeField] float _jumpForce = 1;
@@ -47,8 +48,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        _groundCheck.OnGroundHit += HitsGround;
-        _groundCheck.OnGroundLeave += LeavesGround;
+        _groundCheck.OnGroundHit.AddListener(HitsGround);
+        _groundCheck.OnGroundLeave.AddListener(LeavesGround);
     }
 
     void Update()
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
     {
         //_rb.useGravity = true;
         IsSuspended = false;
+        _rb.velocity = Vector3.zero;
         _rb.AddForce(Vector3.down * _diveForce, ForceMode.Impulse);
         IsDiving = true;
     }
