@@ -158,8 +158,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpForce: 8
-  _floatForce: 1
-  _diveForce: 1
+  _jumpBoostForce: 3.5
+  _diveForce: 15
+  _suspendedForce: 4
+  _groundCheck: {fileID: 746036681}
 --- !u!54 &318407262
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -630,7 +632,7 @@ GameObject:
   - component: {fileID: 746036682}
   - component: {fileID: 746036681}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -733,6 +735,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &906799825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 906799826}
+  m_Layer: 0
+  m_Name: ennemies spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &906799826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906799825}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.9593632, y: 1.3741007, z: 1.490184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1645554909
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +778,7 @@ GameObject:
   - component: {fileID: 1645554913}
   - component: {fileID: 1645554912}
   - component: {fileID: 1645554911}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: barre du bas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -838,6 +871,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1796176614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1796176615}
+  m_Layer: 0
+  m_Name: Terrain spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1796176615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796176614}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.9593632, y: 1.3741007, z: 1.490184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1880148668
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,8 +914,8 @@ GameObject:
   - component: {fileID: 1880148672}
   - component: {fileID: 1880148671}
   - component: {fileID: 1880148670}
-  m_Layer: 0
-  m_Name: serqueuille
+  m_Layer: 6
+  m_Name: barre du haut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -953,3 +1017,5 @@ SceneRoots:
   - {fileID: 1645554914}
   - {fileID: 318407266}
   - {fileID: 1880148673}
+  - {fileID: 1796176615}
+  - {fileID: 906799826}

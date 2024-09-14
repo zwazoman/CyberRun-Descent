@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
+    public event Action OnGroundHit;
+    public event Action OnGroundLeave;
+
     Collider _coll;
 
     private void Awake()
@@ -13,15 +17,11 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerControls.Instance.IsGrounded = true;
-        if (PlayerControls.Instance.IsDiving)
-        {
-            //con de dive
-        }
+        OnGroundHit?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        PlayerControls.Instance.IsGrounded = false;
+        OnGroundLeave?.Invoke();
     }
 }
