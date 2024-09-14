@@ -57,15 +57,6 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614818}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614663}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614666}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614669}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614820}
       id: 0
       isStickyNote: 0
@@ -2514,7 +2505,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614710}
   m_ExposedName: RadiusScale
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 1
   m_Category: 
   m_Min:
     m_Type:
@@ -5726,7 +5717,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614810}
   m_ExposedName: Color
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 2
   m_Category: 
   m_Min:
     m_Type:
@@ -6054,7 +6045,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614819}
   m_ExposedName: Intensity
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 3
   m_Category: 
   m_Min:
     m_Type:
@@ -6134,7 +6125,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614821}
   m_ExposedName: Lifetime
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 4
   m_Category: 
   m_Min:
     m_Type:
