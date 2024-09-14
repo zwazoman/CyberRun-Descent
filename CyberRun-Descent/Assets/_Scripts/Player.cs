@@ -70,13 +70,13 @@ public class Player : MonoBehaviour
             else
             {
                 OnDive?.Invoke();
-                if (!IsDiving) Suspend();
+                if (!IsDiving) Dive();
             }
         }
         if (context.canceled)
         {
             IsJumping = false;
-            if(IsSuspended) Dive();
+            //if(IsSuspended) Dive();
         }
     }
 
