@@ -405,6 +405,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ee975d5cbbb837746a4cc61cef038c9d, type: 3}
   - {fileID: 8300000, guid: f66d667b52c809c49906df172b738a8c, type: 3}
   _groundDiveSoundVolume: 1
+  _groundDiveSound2:
+  - {fileID: 8300000, guid: 0c374434b655d1f46a569ce3533e0636, type: 3}
+  _groundDiveSoundVolume2: 0.4
 --- !u!1 &4291944335042060379
 GameObject:
   m_ObjectHideFlags: 0
