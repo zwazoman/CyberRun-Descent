@@ -7,13 +7,18 @@ using UnityEngine.Rendering;
 using System;
 using System.Threading.Tasks;
 using static PostProcessController;
+using Unity.VisualScripting;
+using System.ComponentModel;
 
 public class PostProcessController : MonoBehaviour
 {
     public VolumeProfile mVolumeProfile;
     public Vignette mVignette;
     public ColorAdjustments mColorAdjustments;
-    public ExposureEffect mEffectAnimation;
+
+
+    public ExposureEffect _exposureEffect;
+
     void Start()
     {
         // get the effects
@@ -33,24 +38,30 @@ public class PostProcessController : MonoBehaviour
             }
         }
 
-        // get the intensity parameter and all other parameters to be used. 
-        // PP parameters are usually an instance of ClampedParameter
-        // don't create a new ClampedFloatParameter, get the reference to the existing one
-        ClampedFloatParameter intensity = mVignette.intensity;
-        intensity.value = 1f;
+        _exposureEffect.SetUp();
 
-        FloatParameter exposure = mColorAdjustments.postExposure;
-        exposure.value = 10;
+        InvokeRepeating("t", 2, 2);
+    }
 
+    private void t()
+    {
+        _exposureEffect.play(this);
+    }
+
+    private void OnDestroy()
+    {
+        _exposureEffect.OnDestroy(this);
     }
 
     [Serializable]
-    public abstract class EffectAnimation<ComponentType,VolumeParameterType> where ComponentType : VolumeComponent where VolumeParameterType : VolumeParameter
+    public abstract class EffectAnimation<ComponentType> where ComponentType : VolumeComponent
     {
         public float duration;
         public AnimationCurve AlphaCurve01;
 
-        protected ComponentType component;
+        protected ComponentType _component;
+        
+        private Coroutine activeCoroutine;
 
         public void SetUp()
         {
@@ -59,38 +70,65 @@ public class PostProcessController : MonoBehaviour
             {
                 if (mVolumeProfile.components[i].GetType() == typeof( ComponentType))
                 {
-                    component = (ComponentType)mVolumeProfile.components[i];
-                    print(component.name);
+                    _component = (ComponentType)mVolumeProfile.components[i];
+                    print(_component.name);
                 }
             }
         }
 
-        //@AUSECOURS comment on cancel une task?
-        public async Task Play(VolumeParameterType parameter)
+        protected abstract void OnSetUp();
+
+
+        public abstract void OnDestroy(MonoBehaviour mb);
+
+        public void play(MonoBehaviour mb)
+        {
+            activeCoroutine = mb.StartCoroutine(_Play());
+        }
+        public void stop(MonoBehaviour mb)
+        {
+            if(activeCoroutine!=null) mb.StopCoroutine(activeCoroutine);
+            activeCoroutine = null;
+        }
+        private IEnumerator _Play()
         {
             float endTime = Time.time + duration;
             while(Time.time < endTime)
             {
                 float alpha = 1f-(endTime-Time.time)/duration;
 
-                ApplyEffect(parameter, alpha);
+                ApplyEffect(_component, alpha);
                 //parameter.value = (parameter.value*alpha);
 
-                await Task.Yield();
+                yield return null;
             }
         }
 
-        protected abstract void ApplyEffect(VolumeParameterType volumeParameter, float alpha);
+        protected abstract void ApplyEffect(ComponentType component, float alpha);
     }
 
     [Serializable]
-    public class ExposureEffect : EffectAnimation<ColorAdjustments, ClampedFloatParameter> 
+    public class ExposureEffect : EffectAnimation<ColorAdjustments> 
     {
         public float from, to;
-        protected override void ApplyEffect(ClampedFloatParameter volumeParameter, float alpha)
+        float startValue;
+
+        public override void OnDestroy(MonoBehaviour mb)
         {
-            volumeParameter.value = Mathf.Lerp( from,to,alpha);
+            stop(mb);
+            _component.postExposure.value = startValue;
         }
+
+        protected override void ApplyEffect(ColorAdjustments component, float alpha)
+        {
+            component.postExposure.value = Mathf.Lerp( from,to,alpha);
+        }
+
+        protected override void OnSetUp()
+        {
+            startValue = _component.postExposure.value;
+        }
+
     }
 
 }
