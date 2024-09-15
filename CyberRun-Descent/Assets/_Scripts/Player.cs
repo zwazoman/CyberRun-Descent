@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Jump()
+    public void Jump()
     {
         if (!enabled) return;
 

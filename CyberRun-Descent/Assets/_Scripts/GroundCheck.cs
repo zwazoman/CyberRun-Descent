@@ -29,13 +29,22 @@ public class GroundCheck : MonoBehaviour
     {
         if (Physics.SphereCast(Player.Instance.RB.position+ Vector3.up*.5f, .5f, Vector3.down, out RaycastHit hit,Mathf.Max(-Player.Instance.RB.velocity.y*Time.deltaTime,.6f), LayerMask.GetMask("Limits")))
         {
-            print("grounded ptn");
+
             if (!isGrounded)
             {
-
+                Player.Instance.RB.velocity = Vector3.zero;
                 if (Player.Instance.IsDiving)
                 {
                     OnGroundDiveHit?.Invoke();
+
+                    if (hit.collider.gameObject.TryGetComponent<DestroyableThing>(out DestroyableThing thing))
+                    {
+                        thing.hit();
+                        Player.Instance.Jump();
+                        if(Input.GetKey(KeyCode.Space)) Player.Instance.Jump();//t'inquiete
+                    }
+
+
                 }
                 else
                 {
