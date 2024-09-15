@@ -12,78 +12,71 @@ using System.ComponentModel;
 
 public class PostProcessController : MonoBehaviour
 {
-    public VolumeProfile mVolumeProfile;
-    public Vignette mVignette;
-    public ColorAdjustments mColorAdjustments;
+    [Header("references")]
+    [SerializeField] VolumeProfile mVolumeProfile;
 
+    [Header("Effects")]
+    public ExposureEffect E_ExposureFlash = new();
+    public ScreenDistortionEffect E_ScreenDistortion = new();
+    public ExposureEffect E_ExposureFlashLong = new();
 
-    public ExposureEffect _exposureEffect;
+    public static PostProcessController instance { get; set; }
 
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
-        // get the effects
-        for (int i = 0; i < mVolumeProfile.components.Count; i++)
-        {
-            if (mVolumeProfile.components[i].name == "Vignette")
-            {
-                mVignette = (Vignette)mVolumeProfile.components[i];
-                print("a");
-            }
-
-            if (mVolumeProfile.components[i].name == "ColorAdjustments")
-            {
-                mColorAdjustments = (ColorAdjustments)mVolumeProfile.components[i];
-                print("b");
-
-            }
-        }
-
-        _exposureEffect.SetUp();
-
-        InvokeRepeating("t", 2, 2);
-    }
-
-    private void t()
-    {
-        _exposureEffect.play(this);
+        E_ExposureFlash.SetUp(mVolumeProfile);
+        E_ExposureFlashLong.SetUp(mVolumeProfile);
+        E_ScreenDistortion.SetUp(mVolumeProfile);
     }
 
     private void OnDestroy()
     {
-        _exposureEffect.OnDestroy(this);
+        E_ExposureFlash.OnDestroy();
+        E_ExposureFlashLong.OnDestroy();
+        E_ScreenDistortion.OnDestroy();
     }
 
+
+
+    //-----------------------------  classe abstraite  -----------------------------
     [Serializable]
-    public abstract class EffectAnimation<ComponentType> where ComponentType : VolumeComponent
+    public abstract class PostProcessEffectAnimation<ComponentType> where ComponentType : VolumeComponent
     {
         public float duration;
-        public AnimationCurve AlphaCurve01;
 
         protected ComponentType _component;
         
         private Coroutine activeCoroutine;
 
-        public void SetUp()
+        public void SetUp(VolumeProfile mVolumeProfile)
         {
-            VolumeProfile mVolumeProfile = new();
+            //print("--- Set Up ---");
             for (int i = 0; i < mVolumeProfile.components.Count; i++)
             {
+                //print(mVolumeProfile.components[i]);
+
                 if (mVolumeProfile.components[i].GetType() == typeof( ComponentType))
                 {
                     _component = (ComponentType)mVolumeProfile.components[i];
                     print(_component.name);
                 }
             }
+            //print("--- Set Up End ---");
+
         }
 
         protected abstract void OnSetUp();
 
+        public abstract void OnDestroy();
 
-        public abstract void OnDestroy(MonoBehaviour mb);
-
-        public void play(MonoBehaviour mb)
+        public void play()
         {
-            activeCoroutine = mb.StartCoroutine(_Play());
+            stop(PostProcessController.instance);
+            activeCoroutine = PostProcessController.instance.StartCoroutine(_Play());
         }
         public void stop(MonoBehaviour mb)
         {
@@ -92,36 +85,56 @@ public class PostProcessController : MonoBehaviour
         }
         private IEnumerator _Play()
         {
-            float endTime = Time.time + duration;
-            while(Time.time < endTime)
-            {
-                float alpha = 1f-(endTime-Time.time)/duration;
+           // print("--anim starting--");
 
+            float endTime = Time.time + duration;
+            OnBeforePlay();
+            while (Time.time < endTime)
+            {
+                //print("putain;");
+                float alpha = Mathf.InverseLerp(endTime - duration, endTime, Time.time);//1f-(endTime-Time.time)/duration;
+                //print("Alpha:" + alpha);
                 ApplyEffect(_component, alpha);
                 //parameter.value = (parameter.value*alpha);
 
                 yield return null;
             }
+            //print("--anim done--");
+        }
+
+        protected virtual void OnBeforePlay()
+        {
+
         }
 
         protected abstract void ApplyEffect(ComponentType component, float alpha);
     }
 
+
+    //-----------------------------  classes concretes  -----------------------------
     [Serializable]
-    public class ExposureEffect : EffectAnimation<ColorAdjustments> 
+    public class ExposureEffect : PostProcessEffectAnimation<ColorAdjustments> 
     {
-        public float from, to;
+        public float offset;
         float startValue;
 
-        public override void OnDestroy(MonoBehaviour mb)
+        float AnimStartValue;
+
+        public AnimationCurve AlphaCurve01;
+        public override void OnDestroy()
         {
-            stop(mb);
             _component.postExposure.value = startValue;
         }
 
         protected override void ApplyEffect(ColorAdjustments component, float alpha)
         {
-            component.postExposure.value = Mathf.Lerp( from,to,alpha);
+            alpha = AlphaCurve01.Evaluate(alpha);
+            component.postExposure.value = Mathf.Lerp(Mathf.Lerp(AnimStartValue, startValue,alpha), startValue + offset, alpha);
+        }
+
+        protected override void OnBeforePlay()
+        {
+            AnimStartValue = _component.postExposure.value;
         }
 
         protected override void OnSetUp()
@@ -130,5 +143,38 @@ public class PostProcessController : MonoBehaviour
         }
 
     }
+
+    [Serializable]
+    public class ScreenDistortionEffect : PostProcessEffectAnimation<LensDistortion>
+    {
+        public float offset;
+        float startValue;
+
+        float AnimStartValue;
+
+        public AnimationCurve AlphaCurve01;
+        public override void OnDestroy()
+        {
+            _component.intensity.value = startValue;
+        }
+
+        protected override void ApplyEffect(LensDistortion component, float alpha)
+        {
+            alpha = AlphaCurve01.Evaluate(alpha);
+            component.intensity.value = Mathf.Lerp(Mathf.Lerp(AnimStartValue, startValue, alpha), startValue + offset, alpha);
+        }
+
+        protected override void OnBeforePlay()
+        {
+            AnimStartValue = _component.intensity.value;
+        }
+
+        protected override void OnSetUp()
+        {
+            startValue = _component.intensity.value;
+        }
+
+    }
+
 
 }

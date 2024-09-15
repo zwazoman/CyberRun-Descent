@@ -56,6 +56,8 @@ public class laserVisuals : MonoBehaviour
 
         transform.localScale *= 1.5f;
 
+        PostProcessController.instance.E_ExposureFlash.play();
+
         float endTime = Time.time + duration;
         while (Time.time < endTime)
         {
