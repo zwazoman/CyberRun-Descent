@@ -25,7 +25,6 @@ public class laserVisuals : MonoBehaviour
         _materialPropertyBlock.SetFloat("_staticAlpha", 0.02f);
         _meshRenderer.SetPropertyBlock(_materialPropertyBlock, 0);
 
-        truc();
     }
 
     public async Task startBlinking(float seconds)
@@ -47,7 +46,7 @@ public class laserVisuals : MonoBehaviour
 
     }
 
-    public async Task shoot()
+    public async Task shoot(float duration)
     {
         print("tamere shoot");
 
@@ -57,10 +56,10 @@ public class laserVisuals : MonoBehaviour
 
         transform.localScale *= 1.5f;
 
-        float endTime = Time.time + .2f;
+        float endTime = Time.time + duration;
         while (Time.time < endTime)
         {
-            float alpha = 1f - (endTime - Time.time) / .2f;
+            float alpha = 1f - (endTime - Time.time) / duration;
 
             _materialPropertyBlock.SetFloat("_staticAlpha", 1f-(alpha * alpha));
             _meshRenderer.SetPropertyBlock(_materialPropertyBlock, 0);
@@ -69,14 +68,7 @@ public class laserVisuals : MonoBehaviour
         }
     }
 
-    async void truc()
-    {
-        await Task.Delay(4000);
-        await startBlinking(4);
-        //await Task.Delay(4000);
-        await shoot();
-        Destroy(gameObject);
-    }
+    
 
 }
 

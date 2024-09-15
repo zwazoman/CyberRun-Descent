@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        GameManager.instance.OnGameOver += () => this.enabled = false;
         _groundCheck.OnGroundHit.AddListener(HitsGround);
         _groundCheck.OnGroundLeave.AddListener(LeavesGround);
     }
@@ -60,6 +61,8 @@ public class Player : MonoBehaviour
 
     public void OnSpaceBar(InputAction.CallbackContext context)
     {
+        if (!enabled) return;
+
         if (context.performed) 
         {
             if (IsGrounded)
@@ -83,11 +86,15 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
+        if (!enabled) return;
+
         _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
     
     void Suspend()
     {
+        if (!enabled) return;
+
         OnSuspend?.Invoke();
         _rb.velocity = Vector3.zero;
         //_rb.useGravity = false;
@@ -96,6 +103,8 @@ public class Player : MonoBehaviour
 
     void Dive()
     {
+        if (!enabled) return;
+
         //_rb.useGravity = true;
         IsSuspended = false;
         _rb.velocity = Vector3.zero;
@@ -113,4 +122,22 @@ public class Player : MonoBehaviour
     {
         IsGrounded = false;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "DENJEUREUX")
+        {
+            GetComponent<Collider>().enabled = false;
+
+            Vector3 force = UnityEngine.Random.insideUnitSphere;
+            force.y = Mathf.Abs(force.y) + 1f;
+            force *= 10;
+
+            _rb.velocity = Vector3.zero;
+            _rb.AddForce(force, ForceMode.Impulse);
+
+            GameManager.instance.TriggerGameOver();
+        }
+    }
+
 }
