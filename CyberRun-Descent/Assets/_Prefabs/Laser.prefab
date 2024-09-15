@@ -216,4 +216,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae6754122b03cd449907f2ad374fe803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _laserBeepSound:
+  - {fileID: 8300000, guid: de57258e589bacd4daec2cdd66b1585a, type: 3}
+  _laserBeepVolume: 1
+  _laserShootSound1:
+  - {fileID: 8300000, guid: c33dd655df30f08428d405c990de12d5, type: 3}
+  - {fileID: 8300000, guid: bf2ed93a75d2ff04fbce814de79b3188, type: 3}
+  - {fileID: 8300000, guid: 802a8cf61d90263408081c41a8e2483a, type: 3}
+  - {fileID: 8300000, guid: edb1b8d24f8edaa4c9697e976f601b78, type: 3}
+  - {fileID: 8300000, guid: 1f1fd1fefe8ff4646835d45bab7dc09c, type: 3}
+  _laserShootVolume1: 0.7
+  _laserShootSound2:
+  - {fileID: 8300000, guid: 057552e8c78e3de4aa0c4f12fdad1e5a, type: 3}
+  - {fileID: 8300000, guid: ee975d5cbbb837746a4cc61cef038c9d, type: 3}
+  - {fileID: 8300000, guid: f66d667b52c809c49906df172b738a8c, type: 3}
+  _laserShootVolume2: 1
   _laserTime: 0.25

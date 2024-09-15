@@ -5,6 +5,15 @@ using System.Threading.Tasks;
 
 public class Laser : MonoBehaviour
 {
+    [SerializeField] AudioClip[] _laserBeepSound;
+    [SerializeField] float _laserBeepVolume;
+
+    [SerializeField]AudioClip[] _laserShootSound1;
+    [SerializeField] float _laserShootVolume1;
+
+    [SerializeField] AudioClip[] _laserShootSound2;
+    [SerializeField] float _laserShootVolume2;
+
     [SerializeField] float _laserTime = 1;
 
     laserVisuals _visuals;
@@ -40,9 +49,12 @@ public class Laser : MonoBehaviour
     {
         await Task.Delay((int)(1000f * LifetimeMultiplier));
         _canMove = false;
+        SFXManager.Instance.PlaySFXClip(_laserBeepSound, transform.position, _laserBeepVolume);
         await _visuals.startBlinking(1f* LifetimeMultiplier);
         //await Task.Delay(4000);
         _col.enabled = true;
+        SFXManager.Instance.PlaySFXClip(_laserShootSound1, transform.position, _laserShootVolume1);
+        SFXManager.Instance.PlaySFXClip(_laserShootSound2, transform.position, _laserShootVolume2);
         await _visuals.shoot(.2f);
         Destroy(gameObject);
     }

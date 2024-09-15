@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         PostProcessController.instance.FadeOut.play(true);
         //Time.timeScale = .5f;
         StartCoroutine(slowTimeDown());
-        await Task.Delay(500);
+        await Task.Delay(700);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
