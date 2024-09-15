@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] AudioClip[] _deathSound;
+    [SerializeField] float _deathSoundVolume;
+
     public static GameManager instance { get; private set; }
     public static float Difficulty = 1;
     
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
     {
         OnGameOver?.Invoke();
 
+        SFXManager.Instance.PlaySFXClip(_deathSound,transform.position,_deathSoundVolume);
         PostProcessController.instance.FadeOut.play(true);
         //Time.timeScale = .5f;
         StartCoroutine(slowTimeDown());

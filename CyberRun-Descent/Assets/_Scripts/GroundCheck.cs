@@ -11,6 +11,9 @@ public class GroundCheck : MonoBehaviour
     public UnityEvent OnGroundDiveHit;
     public UnityEvent OnGroundLeave;
 
+    [SerializeField] AudioClip[] _groundDiveSound;
+    [SerializeField] float _groundDiveSoundVolume;
+
     Collider _coll;
 
     bool isGrounded = false;
@@ -36,6 +39,7 @@ public class GroundCheck : MonoBehaviour
                 if (Player.Instance.IsDiving)
                 {
                     OnGroundDiveHit?.Invoke();
+                    SFXManager.Instance.PlaySFXClip(_groundDiveSound,transform.position,_groundDiveSoundVolume);
 
                     if (hit.collider.gameObject.TryGetComponent<DestroyableThing>(out DestroyableThing thing))
                     {
