@@ -55,8 +55,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5049746813790895316}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.75, y: -3.28, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 59.6, y: -3.08, z: -1.8391658}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -169,14 +169,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8312589746698549630}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c47b9ecbb710141a042ff59666518e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxOffset: 5
-  minWait: 5
-  maxWait: 20
+  minWait: 2
+  maxWait: 5
   Laser: {fileID: 8095635128686233763, guid: 110e9c578fcda1441a5a8391d7843017, type: 3}
 --- !u!114 &7981824578749744469
 MonoBehaviour:
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8312589746698549630}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7adeff773ffc0744a8800a8a81cd8ac, type: 3}
   m_Name: 
@@ -215,5 +215,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minTime: 2
   _maxTime: 5
-  _spawnSocket: {fileID: 0}
-  Platforms: []
+  _spawnSocket: {fileID: 1255275691687337102}
+  Platforms:
+  - {fileID: 5088486953481771921, guid: 34537f4f6cf13a44cb89e9a66f1e4b52, type: 3}
+  - {fileID: 2522269457985772424, guid: 0ace600973434b542b18b2a74ba53e7e, type: 3}
+  - {fileID: 3302679927805062916, guid: 53d245c2c490f284db5a2c973b06eefe, type: 3}
+  - {fileID: 7528150874532134403, guid: 53da10e108935934bb0028e45dc09528, type: 3}
