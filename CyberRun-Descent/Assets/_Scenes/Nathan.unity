@@ -1371,6 +1371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68a530b7d167fd49a181795140f2889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deathSound: []
+  _deathSoundVolume: 0
 --- !u!4 &1119499260
 Transform:
   m_ObjectHideFlags: 0

@@ -122,4 +122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scorePopupPrefab: {fileID: 9201798002429850575, guid: 650de3170334aad4b9074ea31add732a,
     type: 3}
+  PickUpVFXprefab: {fileID: 7652399857416174168, guid: 84cf8b76d067c2e42ad335d3b44ae3a1,
+    type: 3}
   magnetDistance: 5
