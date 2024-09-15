@@ -4528,7 +4528,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: -0.1
+      m_SerializableObject: 0.005
     m_Space: 2147483647
   m_Property:
     name: _InnerHeight
@@ -10681,7 +10681,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":2.053091526031494,"g":6.524487495422363,"b":7.3772101402282719,"a":1.0}'
+      m_SerializableObject: '{"r":0.00020356790628284216,"g":0.0006469152867794037,"b":0.0007314643007703126,"a":1.0}'
     m_Space: 2147483647
   m_Property:
     name: _Color

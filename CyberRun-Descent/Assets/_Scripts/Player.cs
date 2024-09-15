@@ -21,16 +21,19 @@ public class Player : MonoBehaviour
     [SerializeField] float _jumpBoostForce = 1;
     [SerializeField] float _diveForce = 1;
     [SerializeField] float _suspendedForce = 2;
+    [SerializeField] float _maxJumpDuration = .5f;
 
     [Header("References")]
     [SerializeField] GroundCheck _groundCheck;
 
 
-    Rigidbody _rb;
+    public Rigidbody RB;
     
 
     private static Player instance = null;
     public static Player Instance => instance;
+
+    private float TimeSinceLastJump = 0;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -43,7 +46,7 @@ public class Player : MonoBehaviour
             instance = this;
         }
 
-        _rb = GetComponent<Rigidbody>();
+        RB = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -55,8 +58,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (IsJumping) if (_rb.velocity.y >= 0) _rb.AddForce(Vector3.up * _jumpBoostForce);
-        if (IsSuspended) _rb.AddForce(Vector3.up * _suspendedForce);
+        if (IsJumping)
+        {
+            if (RB.velocity.y >= 0 && Time.time <= TimeSinceLastJump + _maxJumpDuration)
+            {
+                RB.AddForce(Vector3.up * _jumpBoostForce);
+            } 
+        }
+
+        if (IsSuspended) RB.AddForce(Vector3.up * _suspendedForce);
     }
 
     public void OnSpaceBar(InputAction.CallbackContext context)
@@ -88,7 +98,8 @@ public class Player : MonoBehaviour
     {
         if (!enabled) return;
 
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        TimeSinceLastJump = Time.time;
+        RB.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
     
     void Suspend()
@@ -96,7 +107,7 @@ public class Player : MonoBehaviour
         if (!enabled) return;
 
         OnSuspend?.Invoke();
-        _rb.velocity = Vector3.zero;
+        RB.velocity = Vector3.zero;
         //_rb.useGravity = false;
         IsSuspended = true;
     }
@@ -107,8 +118,8 @@ public class Player : MonoBehaviour
 
         //_rb.useGravity = true;
         IsSuspended = false;
-        _rb.velocity = Vector3.zero;
-        _rb.AddForce(Vector3.down * _diveForce, ForceMode.Impulse);
+        RB.velocity = Vector3.zero;
+        RB.AddForce(Vector3.down * _diveForce, ForceMode.Impulse);
         IsDiving = true;
     }
 
@@ -133,8 +144,8 @@ public class Player : MonoBehaviour
             force.y = Mathf.Abs(force.y) + 1f;
             force *= 10;
 
-            _rb.velocity = Vector3.zero;
-            _rb.AddForce(force, ForceMode.Impulse);
+            RB.velocity = Vector3.zero;
+            RB.AddForce(force, ForceMode.Impulse);
 
             GameManager.instance.TriggerGameOver();
         }
