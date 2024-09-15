@@ -8,6 +8,7 @@ public class PlayerVisuals : MonoBehaviour
     {
         PostProcessController.instance.E_ScreenDistortion.play();
         PostProcessController.instance.E_ExposureFlashLong.play();
+        print("Salope");
 
     }
 }

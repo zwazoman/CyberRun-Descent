@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,10 +26,10 @@ public class PlatformsSpawner : MonoBehaviour
 
     IEnumerator SpawnPlatforms()
     {
-        while (IsSpawning)
+        while (IsSpawning && Platforms.Length>0)
         {
             yield return new WaitForSeconds(Random.Range(_minTime,_maxTime));
-            Instantiate(Platforms[Random.Range(0, Platforms.Length)], _spawnSocket.position, Quaternion.identity);
+            Instantiate(Platforms[Random.Range(0, Platforms.Length-1)], _spawnSocket.position, Quaternion.identity);
         }
     }
 }

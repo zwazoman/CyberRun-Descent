@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+
     private void Update()
     {
         Difficulty = Mathf.Lerp(1,Difficulty,Time.time/ DifficultyRampUpDuration);
@@ -30,9 +31,30 @@ public class GameManager : MonoBehaviour
     public async void TriggerGameOver()
     {
         OnGameOver?.Invoke();
-        Time.timeScale = .5f;
-        await Task.Delay(2000);
+
+        PostProcessController.instance.FadeOut.play(true);
+        //Time.timeScale = .5f;
+        StartCoroutine(slowTimeDown());
+        await Task.Delay(1000);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    private IEnumerator slowTimeDown()
+    {
+        print("--anim starting--");
+        float t =  Time.unscaledTime;
+        float endTime = t + .5f;
+        while (t < endTime)
+        {
+            t = Time.unscaledTime;
+            //print("putain;");
+            float alpha = Mathf.InverseLerp(endTime - .5f, endTime, t);//1f-(endTime-Time.time)/duration;
+
+            Time.timeScale = Mathf.Lerp(1, .4f, alpha);
+            //parameter.value = (parameter.value*alpha);
+
+            yield return null;
+        }
+        print("--anim done--");
+    }
 }
