@@ -27,6 +27,12 @@ public class Player : MonoBehaviour
     [Header("References")]
     [SerializeField] GroundCheck _groundCheck;
 
+    [Header("Sounds")]
+    [SerializeField] AudioClip[] _diveSounds;
+    [SerializeField] float _diveSoundsVolume = 1f;
+
+    [SerializeField] AudioClip[] _jumpSound;
+    [SerializeField] float _jumpSoundVolume = 1f;
 
     public Rigidbody RB;
     
@@ -88,7 +94,6 @@ public class Player : MonoBehaviour
             }
             else
             {
-                OnDive?.Invoke();
                 if (!IsDiving) Dive();
             }
         }
@@ -103,6 +108,7 @@ public class Player : MonoBehaviour
     {
         if (!enabled) return;
 
+        SFXManager.Instance.PlaySFXClip(_jumpSound, transform.position, _jumpSoundVolume);
         LastJumpTime = Time.time;
         RB.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
@@ -120,7 +126,8 @@ public class Player : MonoBehaviour
     void Dive()
     {
         if (!enabled) return;
-
+        OnDive?.Invoke();
+        SFXManager.Instance.PlaySFXClip(_diveSounds, transform.position, _diveSoundsVolume);
         //_rb.useGravity = true;
         IsSuspended = false;
         RB.velocity = Vector3.zero;
