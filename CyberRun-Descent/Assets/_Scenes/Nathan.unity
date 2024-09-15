@@ -272,13 +272,37 @@ MonoBehaviour:
   OnDive:
     m_PersistentCalls:
       m_Calls: []
-  _jumpForce: 13
-  _jumpBoostForce: 12
+  _jumpForce: 7
+  _jumpBoostForce: 20
   _diveForce: 50
   _suspendedForce: 4
   _maxJumpDuration: 0.4
+  _jumpForceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21606648
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -3.3004892
+      outSlope: -3.3004892
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03185594
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _groundCheck: {fileID: 832434314}
-  RB: {fileID: 0}
+  RB: {fileID: 127829727}
 --- !u!54 &127829727
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -423,11 +447,11 @@ Transform:
   m_GameObject: {fileID: 185672405}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00003456617, y: -0.7071069, z: 0.70710677, w: -0.000019902374}
-  m_LocalPosition: {x: -0.0015806112, y: 1.4251138, z: -0.5531742}
-  m_LocalScale: {x: 0.05257624, y: 0.07350171, z: 0.45894897}
+  m_LocalPosition: {x: 2.654123, y: -0.47000015, z: -1.4999998}
+  m_LocalScale: {x: 10, y: 0.3547701, z: 0.42854375}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1215430597}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0.0030059814}
 --- !u!1 &490194507
 GameObject:
@@ -560,8 +584,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490194507}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.063289195, y: 0.107208945, z: 0.0068385312, w: 0.99219656}
-  m_LocalPosition: {x: 0.12, y: 2.85, z: -9.64}
+  m_LocalRotation: {x: 0.04832675, y: 0.10729984, z: -0.005221808, w: 0.9930378}
+  m_LocalPosition: {x: 0.12, y: 5.46, z: -9.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -996,6 +1020,21 @@ MonoBehaviour:
   OnGroundHit:
     m_PersistentCalls:
       m_Calls: []
+  OnGroundDiveHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1178912365}
+        m_TargetAssemblyTypeName: SimpleVFXs.StylisedEffect, Assembly-CSharp
+        m_MethodName: playVFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnGroundLeave:
     m_PersistentCalls:
       m_Calls: []
@@ -1243,8 +1282,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146540235}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.063289195, y: 0.107208945, z: 0.0068385312, w: 0.99219656}
-  m_LocalPosition: {x: 0.12, y: 2.85, z: -9.64}
+  m_LocalRotation: {x: 0.04832675, y: 0.10729984, z: -0.005221808, w: 0.9930378}
+  m_LocalPosition: {x: 0.12, y: 5.46, z: -9.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1283,8 +1322,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f083c85da195448a2aa967591d5e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerAnticipationStrength: -0.1
-  PlayerAnticipationSmoothness: 0.06
+  PlayerAnticipationStrength: -0.3
+  PlayerAnticipationSmoothness: 0.08
+  positionWeight: 0.3
+  basePose: {x: 0, y: 0, z: 0}
 --- !u!1 &1178912361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,7 +1690,6 @@ Transform:
   m_LocalScale: {x: 190.2, y: 0.93375, z: 4.8266892}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 185672409}
   - {fileID: 495444381}
   - {fileID: 1205666011}
   m_Father: {fileID: 0}
@@ -2326,6 +2366,7 @@ SceneRoots:
   - {fileID: 490194511}
   - {fileID: 1146540237}
   - {fileID: 1858146678}
+  - {fileID: 185672409}
   - {fileID: 1215430597}
   - {fileID: 1581518387}
   - {fileID: 127829728}

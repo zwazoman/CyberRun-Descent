@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class GroundCheck : MonoBehaviour
 {
     public UnityEvent OnGroundHit;
+    public UnityEvent OnGroundDiveHit;
     public UnityEvent OnGroundLeave;
 
     Collider _coll;
@@ -19,7 +20,14 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == 6) OnGroundHit?.Invoke();
+        if (Player.Instance.IsDiving)
+        {
+            if (other.gameObject.layer == 6) OnGroundDiveHit?.Invoke();
+        }
+        else
+        {
+            if (other.gameObject.layer == 6) OnGroundHit?.Invoke();
+        }
     }
 
     private void OnTriggerExit(Collider other)

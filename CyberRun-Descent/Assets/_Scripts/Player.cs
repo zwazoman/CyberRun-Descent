@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] float _diveForce = 1;
     [SerializeField] float _suspendedForce = 2;
     [SerializeField] float _maxJumpDuration = .5f;
+    [SerializeField] AnimationCurve _jumpForceCurve;
 
     [Header("References")]
     [SerializeField] GroundCheck _groundCheck;
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour
     private static Player instance = null;
     public static Player Instance => instance;
 
-    private float TimeSinceLastJump = 0;
+    private float LastJumpTime = 0;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -53,6 +54,8 @@ public class Player : MonoBehaviour
     {
         GameManager.instance.OnGameOver += () => this.enabled = false;
         _groundCheck.OnGroundHit.AddListener(HitsGround);
+        _groundCheck.OnGroundDiveHit.AddListener(HitsGround);
+
         _groundCheck.OnGroundLeave.AddListener(LeavesGround);
     }
 
@@ -60,9 +63,11 @@ public class Player : MonoBehaviour
     {
         if (IsJumping)
         {
-            if (RB.velocity.y >= 0 && Time.time <= TimeSinceLastJump + _maxJumpDuration)
+            if (RB.velocity.y >= 0 && Time.time <= LastJumpTime + _maxJumpDuration)
             {
-                RB.AddForce(Vector3.up * _jumpBoostForce);
+                float alpha = Mathf.InverseLerp(LastJumpTime, LastJumpTime + _maxJumpDuration, Time.time);
+                float force = _jumpForceCurve.Evaluate(alpha)* _jumpBoostForce;
+                RB.AddForce(Vector3.up * force);
             } 
         }
 
@@ -98,7 +103,7 @@ public class Player : MonoBehaviour
     {
         if (!enabled) return;
 
-        TimeSinceLastJump = Time.time;
+        LastJumpTime = Time.time;
         RB.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
     
