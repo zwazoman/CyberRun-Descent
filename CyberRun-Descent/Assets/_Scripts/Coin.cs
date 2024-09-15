@@ -13,6 +13,9 @@ public class Coin : MonoBehaviour
 {
     [SerializeField] GameObject scorePopupPrefab;
     [SerializeField] VisualEffect PickUpVFXprefab;
+
+    [SerializeField] AudioClip[] _pickupSound;
+    [SerializeField] float _pickupSoundVolume;
     
     //private TMP_Text CoinTexte;
     bool isDead = false;
@@ -62,6 +65,7 @@ public class Coin : MonoBehaviour
         Destroy(GameObject.Instantiate(PickUpVFXprefab, transform.position, Quaternion.identity),2);
 
         GameObject Popup = GameObject.Instantiate(scorePopupPrefab, transform.position + Vector3.forward * -1, Quaternion.identity);
+        SFXManager.Instance.PlaySFXClip(_pickupSound, transform.position, _pickupSoundVolume);
         Popup.GetComponent<scorePopup>().init(200, Color.white);
         //Popup.transform.localScale *= 2;
 

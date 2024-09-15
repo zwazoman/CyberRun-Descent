@@ -124,4 +124,11 @@ MonoBehaviour:
     type: 3}
   PickUpVFXprefab: {fileID: 7652399857416174168, guid: 84cf8b76d067c2e42ad335d3b44ae3a1,
     type: 3}
+  _pickupSound:
+  - {fileID: 8300000, guid: 52e620f48a06c844b85ea768355b8005, type: 3}
+  - {fileID: 8300000, guid: e57c518e7454e4c48b351c648127f1d0, type: 3}
+  - {fileID: 8300000, guid: cbcf08812f18bce4bb9d6daaae7a1e9f, type: 3}
+  - {fileID: 8300000, guid: 80d546e27987a5943b56aa11caeec782, type: 3}
+  - {fileID: 8300000, guid: 6682cabb70fc4fa49b858af4ee8b9488, type: 3}
+  _pickupSoundVolume: 1
   magnetDistance: 5
