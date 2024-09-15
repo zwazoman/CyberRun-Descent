@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class Player : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     [SerializeField] GroundCheck _groundCheck;
+    [SerializeField] VisualEffect _deathVFX;
 
     [Header("Sounds")]
     [SerializeField] AudioClip[] _diveSounds;
@@ -151,6 +153,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "DENJEUREUX")
         {
             GetComponent<Collider>().enabled = false;
+            _deathVFX.Play();
 
             Vector3 force = UnityEngine.Random.insideUnitSphere;
             force.y = Mathf.Abs(force.y) + 1f;
