@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         PostProcessController.instance.FadeOut.play(true);
         //Time.timeScale = .5f;
         StartCoroutine(slowTimeDown());
-        await Task.Delay(1000);
+        await Task.Delay(500);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -43,12 +43,12 @@ public class GameManager : MonoBehaviour
     {
         print("--anim starting--");
         float t =  Time.unscaledTime;
-        float endTime = t + .5f;
+        float endTime = t + .3f;
         while (t < endTime)
         {
             t = Time.unscaledTime;
             //print("putain;");
-            float alpha = Mathf.InverseLerp(endTime - .5f, endTime, t);//1f-(endTime-Time.time)/duration;
+            float alpha = Mathf.InverseLerp(endTime - .3f, endTime, t);//1f-(endTime-Time.time)/duration;
 
             Time.timeScale = Mathf.Lerp(1, .4f, alpha);
             //parameter.value = (parameter.value*alpha);

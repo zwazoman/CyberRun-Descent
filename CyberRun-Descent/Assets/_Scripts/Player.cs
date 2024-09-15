@@ -147,6 +147,7 @@ public class Player : MonoBehaviour
 
             Vector3 force = UnityEngine.Random.insideUnitSphere;
             force.y = Mathf.Abs(force.y) + 1f;
+            force.z -= 2;
             force *= 10;
 
             RB.velocity = Vector3.zero;
