@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2332653881253922811}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5049746813790895316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1255275691687337102}
+  m_Layer: 0
+  m_Name: PlatformsSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1255275691687337102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5049746813790895316}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.75, y: -3.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 805823602564834612}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5140825409974155505
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,8 +86,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5140825409974155505}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.0950565, y: 0.7470002, z: -3.7098198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.0950565, y: 0.7470002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -106,6 +137,7 @@ GameObject:
   - component: {fileID: 805823602564834612}
   - component: {fileID: 2256042114264450631}
   - component: {fileID: 7981824578749744469}
+  - component: {fileID: 7576090772431027503}
   m_Layer: 0
   m_Name: spawners
   m_TagString: Untagged
@@ -127,6 +159,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2332653881253922811}
+  - {fileID: 1255275691687337102}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2256042114264450631
@@ -168,3 +201,19 @@ MonoBehaviour:
   _enemyShotsNumber: 2
   _enemyTimeBetweenShots: 1.5
   _enemyMoveSpeed: 8
+--- !u!114 &7576090772431027503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312589746698549630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df02c0ce25b04f43be82cacb57e6b97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minTime: 2
+  _maxTime: 5
+  _spawnSocket: {fileID: 0}
+  Platforms: []
