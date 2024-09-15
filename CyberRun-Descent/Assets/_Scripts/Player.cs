@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         _groundCheck.OnGroundLeave.AddListener(LeavesGround);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (IsJumping)
         {
@@ -148,6 +148,7 @@ public class Player : MonoBehaviour
         IsGrounded = false;
     }
 
+    //game over
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "DENJEUREUX")

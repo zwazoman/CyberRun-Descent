@@ -494,7 +494,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _jumpForce: 12
-  _jumpBoostForce: 18
+  _jumpBoostForce: 75
   _diveForce: 50
   _suspendedForce: 4
   _maxJumpDuration: 0.4
