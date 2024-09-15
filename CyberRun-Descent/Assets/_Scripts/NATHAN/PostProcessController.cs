@@ -96,7 +96,11 @@ public class PostProcessController : MonoBehaviour
         }
         public void stop(MonoBehaviour mb)
         {
-            if(PostProcessController.instance.effectsCoroutines[this.GetType()] != null) mb.StopCoroutine(PostProcessController.instance.effectsCoroutines[this.GetType()]);
+            if (PostProcessController.instance.effectsCoroutines[this.GetType()] != null)
+            {
+                print("STOOOOOOOOOOOOOOOOP");
+                mb.StopCoroutine(PostProcessController.instance.effectsCoroutines[this.GetType()]);
+            }
             PostProcessController.instance.effectsCoroutines[this.GetType()] = null;
         }
         private IEnumerator _Play(bool useUnscaledTime = false)
@@ -116,6 +120,7 @@ public class PostProcessController : MonoBehaviour
 
                 yield return null;
             }
+            ApplyEffect(_component,1);
            // print("--anim done--");
         }
 
@@ -146,7 +151,7 @@ public class PostProcessController : MonoBehaviour
         protected override void ApplyEffect(ColorAdjustments component, float alpha)
         {
             alpha = AlphaCurve01.Evaluate(alpha);
-            float v = Mathf.Lerp(AnimStartValue, startValue, alpha);
+            float v = startValue;//Mathf.Lerp(AnimStartValue, startValue, alpha);
             component.postExposure.value = Mathf.Lerp(v,v + offset, alpha);
         }
 

@@ -33,7 +33,8 @@ public class Coin : MonoBehaviour
         Vector3 offset = player.transform.position - transform.position;
         if (Vector3.SqrMagnitude(offset) < magnetDistance * magnetDistance )
         {
-            magnetDistance = 100;
+            transform.parent = null;
+            magnetDistance = 10000;
             transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref vel, 0.07f);
         }
 
@@ -55,7 +56,8 @@ public class Coin : MonoBehaviour
     {
         isDead = true;
         //AudioManager.Instance.PlayCoin();
-        
+
+        PostProcessController.instance.E_ExposureFlash.play();
         transform.localScale *= 1.6f;
         Destroy(GameObject.Instantiate(PickUpVFXprefab, transform.position, Quaternion.identity),2);
 
