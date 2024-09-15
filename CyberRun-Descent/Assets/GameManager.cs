@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public static float Difficulty = 1;
     
     const float MaxDificulty = 3;
-    const float DifficultyRampUpDuration = 60;
+    const float DifficultyRampUpDuration = 80;
 
     public event Action OnGameOver;
 

@@ -29,7 +29,7 @@ public class PlatformsSpawner : MonoBehaviour
         while (IsSpawning && Platforms.Length>0)
         {
             Instantiate(Platforms[Random.Range(0, Platforms.Length-1)], _spawnSocket.position, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(_minTime,_maxTime));
+            yield return new WaitForSeconds(Mathf.Lerp(_minTime, _maxTime,Mathf.Pow(Random.value,GameManager.Difficulty)));
         }
     }
 
