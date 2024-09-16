@@ -36,17 +36,12 @@ public class ScoreManager : MonoBehaviour
     {
         score += toAdd;
 
-#if UNITY_EDITOR
+
         if(PlayerPrefs.GetInt("EDITOR_HighScore"+SceneManager.GetActiveScene().name) < score)
         {
             PlayerPrefs.SetInt("EDITOR_HighScore" + SceneManager.GetActiveScene().name, score) ;
         }
-#else
-        if(PlayerPrefs.GetInt("HighScore"+SceneManager.GetActiveScene().name) < score)
-        {
-            PlayerPrefs.SetInt("HighScore" + SceneManager.GetActiveScene().name, score) ;
-        }
-#endif
+
         updateScoreDisplay();
     }
 
@@ -55,11 +50,8 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
 
 
-#if UNITY_EDITOR
         if (HighScoreText != null) HighScoreText.text = "Best: " + PlayerPrefs.GetInt("EDITOR_HighScore" + SceneManager.GetActiveScene().name).ToString();
-#else
-        if (HighScoreText != null) HighScoreText.text = "Best: " + PlayerPrefs.GetInt("HighScore" + SceneManager.GetActiveScene().name).ToString();
-#endif
+
 
     }
 
